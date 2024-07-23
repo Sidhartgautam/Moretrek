@@ -1,8 +1,8 @@
 from rest_framework import generics, status,filters,permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from core.utils.filters import TrekCountryCodeFilter
-from .models import Trek, Itinerary,Inclusion,Gallery,Exclusion
-from .serializers import TrekSerializer, ItinerarySerializer, InclusionSerializer,GallerySerializer,ExclusionSerializer
+from .models import Trek, Itinerary,Inclusion,Gallery
+from .serializers import TrekSerializer, ItinerarySerializer, InclusionSerializer,GallerySerializer
 from core.utils.pagination import CustomPagination
 from core.utils.response import PrepareResponse
 
@@ -42,41 +42,6 @@ class InclusionListCreateView(generics.ListCreateAPIView):
             )
             return response.send(code=400)
         
-
-class ExclusionListCreateView(generics.ListCreateAPIView):
-    queryset = Exclusion.objects.all()
-    serializer_class = ExclusionSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def list(self, request, *args, **kwargs):
-        trek_id = request.query_params.get('trek_id')
-        if trek_id:
-            self.queryset = self.queryset.filter(trek_id=trek_id)
-        serializer = self.get_serializer(self.queryset, many=True)
-        response = PrepareResponse(
-            success=True,
-            message="Exclusions retrieved successfully",
-            data=serializer.data
-        )
-        return response.send()
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            response = PrepareResponse(
-                success=True,
-                message="Exclusions created successfully",
-                data=serializer.data
-            )
-            return response.send(code=201)
-        else:
-            response = PrepareResponse(
-                success=False,
-                message="Exclusions creation failed",
-                errors=serializer.errors
-            )
-            return response.send(code=400)
         
 class GalleryListCreateView(generics.ListCreateAPIView):
     queryset = Gallery.objects.all()

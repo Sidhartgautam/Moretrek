@@ -11,14 +11,6 @@ class Inclusion(models.Model):
     def __str__(self):
         return self.name
     
-class Exclusion(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    trek = models.ForeignKey('Trek', related_name='exclusions', on_delete=models.CASCADE, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
 
 class Trek(models.Model):
     name = models.CharField(max_length=100)

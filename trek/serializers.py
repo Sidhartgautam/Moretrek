@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Trek, Itinerary,Inclusion,Gallery,Exclusion
+from .models import Trek, Itinerary,Inclusion,Gallery
 from location.models import Location, Country
 from location.serializers import LocationSerializer
 
@@ -11,13 +11,6 @@ class InclusionSerializer(serializers.ModelSerializer):
         model = Inclusion
         fields = ('id','name','description','trek_id','trek')
 
-class ExclusionSerializer(serializers.ModelSerializer):
-    trek_id = serializers.PrimaryKeyRelatedField(queryset=Trek.objects.all(), source='trek', write_only=True)
-    trek = serializers.StringRelatedField(read_only=True)
-    description = serializers.CharField(required = True)
-    class Meta:
-        model = Exclusion
-        fields = ('id','name','description','trek_id','trek')
 class ItinerarySerializer(serializers.ModelSerializer):
     # trek_id = serializers.PrimaryKeyRelatedField(queryset=Trek.objects.all(), source='trek', write_only=True)
 
@@ -99,6 +92,7 @@ class TrekSerializer(serializers.ModelSerializer):
             'location_id', 
             'location', 
             'inclusions',
+            'exclusions',
             'itineraries',
             'gallery',
             'country_code'

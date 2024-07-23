@@ -5,7 +5,6 @@ from .views import (
         ItineraryListCreateView,
           ItineraryDetailView,
           InclusionListCreateView,
-          ExclusionListCreateView,
           GalleryListCreateView)
 
 urlpatterns = [
@@ -15,5 +14,4 @@ urlpatterns = [
     path('treks/<int:trek_id>/itineraries/<int:pk>/', ItineraryDetailView.as_view(), name='itinerary-detail'),
      path('inclusions/', InclusionListCreateView.as_view(), name='inclusion-list-create'),
     path('gallery/', GalleryListCreateView.as_view(), name='gallery-list-create'),  
-    path('exclusions/', ExclusionListCreateView.as_view(), name='exclusion-list-create'),
 ]

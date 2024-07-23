@@ -57,6 +57,7 @@ Local_APPS=[
     'location',
     'booking',
     'reviews',
+    'guide',
    
 ]
 
